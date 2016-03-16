@@ -25,15 +25,23 @@ void add_circle( struct matrix * points,
 		 double r, double step ) {
   double theta = 0; //parametric t
   double dx, dy;
-  double x0, y0, x, y, step;
-  
-  step = .1;
+  double x0, y0, x, y;
+  //original starting points (lines)
+  x0 = cx + r; //assuming x is horizontal and y is vertical
+  y0 = cy;
   for(; theta < 2 * M_PI; theta += step) {
     dx = r * cos( theta );
     dy = r * sin( theta );
-    add_edge( points, )
+    //second point
+    x = cx + dx;
+    y = cy + dy;
+
+    printf(" x0: %f, y0: %f, x: %f, y: %f \n ", x0,y0,x,y);
+    add_edge( points, x0, y0, 0, x, y, 0 );
+    //start coors for next line
+    x0 = x;
+    y0 = y;
   }
-    
 }
 
 /*======== void add_curve() ==========
