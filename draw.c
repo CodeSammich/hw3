@@ -23,6 +23,17 @@
 void add_circle( struct matrix * points, 
 		 double cx, double cy, 
 		 double r, double step ) {
+  double theta = 0; //parametric t
+  double dx, dy;
+  double x0, y0, x, y, step;
+  
+  step = .1;
+  for(; theta < 2 * M_PI; theta += step) {
+    dx = r * cos( theta );
+    dy = r * sin( theta );
+    add_edge( points, )
+  }
+    
 }
 
 /*======== void add_curve() ==========
