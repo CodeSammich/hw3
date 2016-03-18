@@ -23,12 +23,16 @@ int main( int argc, char **argv ) {
 
   add_circle( edges, 100, 100, 25, .1 );
   draw_lines ( edges, s, c );
+
+  printf(" BOO :D\n ");
   
   if ( argc == 2 )
     parse_file( argv[1], transform, edges, s );
   else
     parse_file( "stdin", transform, edges, s );
 
+  printf(" BOO \n ");
+  
   display( s ) ;
   save_ppm( s, "curves.ppm" );
   
