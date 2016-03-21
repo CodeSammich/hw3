@@ -23,11 +23,11 @@ int main( int argc, char **argv ) {
 
   clear_screen( s );
   
-  /*  add_circle( edges, 250, 250, 100, .01 );
-      draw_lines ( edges, s, c ); */
-
-  add_curve( edges, 100, 100, 200, 200, 250, 250, 300, 300, .01, 1);
+  add_circle( edges, 250, 250, 100, .01 );
   draw_lines ( edges, s, c );
+
+  /*  add_curve( edges, 100, 100, 200, 200, 250, 250, 300, 300, .01, 1);
+      draw_lines ( edges, s, c ); */
 
   /*  if ( argc == 2 )
     parse_file( argv[1], transform, edges, s );
