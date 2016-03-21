@@ -16,22 +16,25 @@ int main( int argc, char **argv ) {
   color c;
   c.red = 0;
   c.green = 45;
-  c.blue = 187;
+  c.blue = 200;
   
   edges = new_matrix(4, 4);
   transform = new_matrix(4, 4);
 
-  add_circle( edges, 100, 100, 25, .1 );
+  clear_screen( s );
+  
+  /*  add_circle( edges, 250, 250, 100, .01 );
+      draw_lines ( edges, s, c ); */
+
+  add_curve( edges, 100, 100, 200, 200, 250, 250, 300, 300, .01, 1);
   draw_lines ( edges, s, c );
 
-  printf(" BOO :D\n ");
-  
-  if ( argc == 2 )
+  /*  if ( argc == 2 )
     parse_file( argv[1], transform, edges, s );
   else
-    parse_file( "stdin", transform, edges, s );
+  parse_file( "stdin", transform, edges, s );*/
 
-  printf(" BOO \n ");
+  //  printf(" BOO \n ");
   
   display( s ) ;
   save_ppm( s, "curves.ppm" );

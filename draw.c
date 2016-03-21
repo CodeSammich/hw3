@@ -23,24 +23,17 @@
 void add_circle( struct matrix * points, 
 		 double cx, double cy, 
 		 double r, double step ) {
-  double theta = 0; //parametric t
-  double dx, dy;
+  double t; //parametric t
   double x0, y0, x, y;
-  //original starting points (lines)
-  x0 = cx + r; //assuming x is horizontal and y is vertical
-  y0 = cy;
-  for(; theta < 2 * M_PI; theta += step) {
-    dx = r * cos( theta );
-    dy = r * sin( theta );
-    //second point
-    x = cx + dx;
-    y = cy + dy;
 
-    printf(" x0: %f, y0: %f, x: %f, y: %f \n ", x0,y0,x,y);
+  for(t = 0; t < 1; t += step) {
+    x = cx + r*cos(t*2*M_PI);
+    y = cy + r*sin(t*2*M_PI);
+    x0 = cx + r*cos((t+step)*2*M_PI);
+    y0 = cy + r*sin((t+step)*2*M_PI);
+    
+    //    printf(" x0: %f, y0: %f, x: %f, y: %f \n ", x0,y0,x,y);
     add_edge( points, x0, y0, 0, x, y, 0 );
-    //start coors for next line
-    x0 = x;
-    y0 = y;
   }
 }
 
@@ -71,6 +64,50 @@ void add_curve( struct matrix *points,
 		double x2, double y2, 
 		double x3, double y3, 
 		double step, int type ) {
+  double t;
+  struct matrix* x_coeff = new_matrix( 4, 4 );
+  struct matrix* y_coeff = new_matrix( 4, 4 ); 
+  if( type == 0) { //hermite
+    struct matrix* hermite_default = make_hermite();
+
+    x_coeff = generate_curve_coefs( x0, x1, x2, x3, 0);
+    y_coeff = generate_curve_coefs( y0, y1, y2, y3, 0 );
+
+    
+  } 
+  else if (type == 1){ //bezier
+    double mx, my, mx1, my1, mx2, my2, t;
+    double prev_x = x0;
+    double prev_y = y0;
+    //mx2, my2 being the middle point of three original lines
+    //http://cubic.org/docs/bezier.htm
+    for( t = 0; t < 1; t += step ) {
+      printf("Boo");
+      
+      mx = (x1 + x0) / (1000 * t);
+      my = (y1 - y0) / (1000 * t);
+      mx1 = (x3 - x2) / (1000 * t);
+      my1 = (y3 - y2) / (1000 * t);
+      mx2 = (x2 - x1) / (1000 * t);
+      my2 = (y2 - y1) / (1000 * t);
+      
+      //second set of midpoints
+      mx = (mx2 - mx) / (1000 * t);
+      my = (my2 - my) / (1000 * t);
+      mx1 = (mx1 - mx2) / (1000 * t);
+      my1 = (my1 - my2) / (1000 * t);
+
+      //final point (mx , my)
+      mx = (mx1 - mx) / (1000 * t);
+      my = (my1 - my) / (1000 * t);
+
+      add_edge( points, prev_x, prev_y, 0, mx, my, 0);
+
+      prev_x = mx;
+      prev_y = my;
+      printf(" %f, %f ", mx, my);
+    }
+  }
 }
 
 /*======== void add_point() ==========
